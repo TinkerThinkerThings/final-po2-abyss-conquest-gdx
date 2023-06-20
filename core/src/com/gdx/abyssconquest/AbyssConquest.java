@@ -1,31 +1,26 @@
 package com.gdx.abyssconquest;
 
-import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.gdx.abyssconquest.screens.WelcomeScreen;
 
-public class AbyssConquest extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
+public class AbyssConquest extends Game {
+	private Music scm;
 
 	@Override
 	public void create() {
-		batch = new SpriteBatch();
-		img = new Texture("assets\\images\\badlogic.jpg");
-	}
-
-	@Override
-	public void render() {
-		ScreenUtils.clear(1, 0, 0, 1);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
+		scm = Gdx.audio.newMusic(Gdx.files.internal("assets/music_and_sounds/sc_music.mp3"));
+		scm.play();
+		scm.setVolume(0.7f);
+		setScreen(new WelcomeScreen(this));
 	}
 
 	@Override
 	public void dispose() {
-		batch.dispose();
-		img.dispose();
+		scm.dispose();
 	}
 }
