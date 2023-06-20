@@ -12,7 +12,7 @@ public class AbyssConquest extends ApplicationAdapter {
 	@Override
 	public void create() {
 		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+		img = new Texture("assets\\images\\badlogic.jpg");
 	}
 
 	@Override
