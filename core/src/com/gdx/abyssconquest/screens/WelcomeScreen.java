@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.gdx.abyssconquest.KarakterUtama;
 import com.gdx.abyssconquest.Zombie;
 
 public class WelcomeScreen extends AbyssScreen {
