@@ -1,8 +1,10 @@
 package com.gdx.abyssconquest;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 
 public class KarakterUtama extends Character {
     private float speed;
@@ -39,5 +41,14 @@ public class KarakterUtama extends Character {
 
     public int getHealth() {
         return health;
+    }
+
+    public Vector2 getPosition() {
+        return new Vector2(boundsColDetect.x, boundsColDetect.y);
+    }
+
+    public void render(SpriteBatch batch, OrthographicCamera camera) {
+        batch.setProjectionMatrix(camera.combined);
+        batch.draw(character, boundsColDetect.x, boundsColDetect.y, boundsColDetect.width, boundsColDetect.height);
     }
 }
