@@ -2,6 +2,8 @@ package com.gdx.abyssconquest.screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -45,9 +47,9 @@ public class WelcomeScreen extends AbyssScreen {
 
         batch.end();
 
-        // if (time > 1) {
-        // if (Gdx.input.isKeyPressed(Keys.ANY_K || Gdx.input.justTouched()) {
-        // game.setScreen(new GameScreen(game)); }
+        if (Gdx.input.isKeyPressed(Keys.ANY_KEY) || Gdx.input.justTouched()) {
+            game.setScreen(new GameScreen(game));
+        }
     }
 
     @Override
