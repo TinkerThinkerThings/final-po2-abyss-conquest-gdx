@@ -2,16 +2,19 @@ package com.gdx.abyssconquest;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.utils.Disposable;
 
 public class Map {
   private TiledMap tiledMap;
-  private OrthogonalTiledMapRenderer mapRenderer;
+  private TiledMapRenderer mapRenderer;
   private OrthographicCamera camera;
 
   public Map(String mapPath, OrthographicCamera camera) {
@@ -32,7 +35,7 @@ public class Map {
 
   public void dispose() {
     tiledMap.dispose();
-    mapRenderer.dispose();
+    ((Disposable) mapRenderer).dispose();
   }
 
   public MapObjects getObjects(String layerName) {
@@ -51,9 +54,5 @@ public class Map {
       }
     }
     return null;
-  }
-
-  public TiledMap getTiledMap() {
-    return tiledMap;
   }
 }
