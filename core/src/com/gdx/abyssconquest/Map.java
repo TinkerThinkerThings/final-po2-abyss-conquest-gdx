@@ -26,6 +26,12 @@ public class Map {
     TmxMapLoader mapLoader = new TmxMapLoader();
     tiledMap = mapLoader.load(mapPath);
     mapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
+
+    float mapWidth = tiledMap.getProperties().get("width", Integer.class)
+        * tiledMap.getProperties().get("tilewidth", Integer.class);
+    float mapHeight = tiledMap.getProperties().get("height", Integer.class)
+        * tiledMap.getProperties().get("tileheight", Integer.class);
+    camera.setToOrtho(false, mapWidth, mapHeight);
   }
 
   public void render() {
