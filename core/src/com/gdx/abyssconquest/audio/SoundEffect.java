@@ -1,9 +1,8 @@
-package com.gdx.abyssconquest.imgbtn;
+package com.gdx.abyssconquest.audio;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.abyssconquest.imgbtn.audio.ButtonSoundEffect;
 
 public class SoundEffect {
 

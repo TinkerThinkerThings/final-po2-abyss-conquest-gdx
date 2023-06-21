@@ -28,12 +28,12 @@ public class GameOverScreen extends AbyssScreen {
 
         // Mulai merender
         spriteBatch.begin();
-        
+
         // Gambar tekstur game over pada tengah layar
         float x = (Gdx.graphics.getWidth() - gameOverTexture.getWidth()) / 2;
         float y = (Gdx.graphics.getHeight() - gameOverTexture.getHeight()) / 2;
         spriteBatch.draw(gameOverTexture, x, y);
-        
+
         // Selesaikan merender
         spriteBatch.end();
     }
@@ -44,4 +44,3 @@ public class GameOverScreen extends AbyssScreen {
         gameOverTexture.dispose();
     }
 }
-
