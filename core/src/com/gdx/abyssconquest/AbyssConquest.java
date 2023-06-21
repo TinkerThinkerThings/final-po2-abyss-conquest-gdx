@@ -16,6 +16,7 @@ public class AbyssConquest extends Game {
 		scm = Gdx.audio.newMusic(Gdx.files.internal("assets/music_and_sounds/sc_music.mp3"));
 		scm.play();
 		scm.setVolume(0.7f);
+		scm.setLooping(true);
 		setScreen(new WelcomeScreen(this));
 	}
 
