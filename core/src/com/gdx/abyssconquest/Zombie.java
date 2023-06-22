@@ -15,7 +15,7 @@ public class Zombie extends Character {
     @Override
     public void update(float delta) {
         float movement = speed * delta;
-        boundsColDetect.x -= movement;
+        boundsColDetect.x += movement;
     }
 
     @Override
