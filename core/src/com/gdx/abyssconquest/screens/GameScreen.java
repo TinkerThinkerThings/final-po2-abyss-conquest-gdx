@@ -2,6 +2,7 @@ package com.gdx.abyssconquest.screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
@@ -24,6 +25,14 @@ public class GameScreen extends AbyssScreen {
   private TiledMapRenderer mapRenderer;
   private KarakterUtama player;
   private Music gsm;
+
+  public Music getGsm() {
+    return gsm;
+  }
+
+  public void setGsm(Music gsm) {
+    this.gsm = gsm;
+  }
 
   public GameScreen(Game game) {
     super(game);
@@ -85,6 +94,12 @@ public class GameScreen extends AbyssScreen {
   @Override
   public void resize(int width, int height) {
     vp.update(width, height, true);
+  }
+
+  public void handleInput() {
+    if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+      player.jump();
+    }
   }
 
   @Override
