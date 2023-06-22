@@ -48,7 +48,7 @@ public class GameScreen extends AbyssScreen {
     float playerWidth = 64;
     float playerHeight = 64;
     String playerImagePath = "assets/images/abyss_kanan/abyss_diam.png.png";
-    float playerSpeed = 200;
+    float playerSpeed = 150;
     int playerHealth = 100;
 
     player = new KarakterUtama(playerX, playerY, playerWidth, playerHeight, playerImagePath, playerSpeed, playerHealth);
