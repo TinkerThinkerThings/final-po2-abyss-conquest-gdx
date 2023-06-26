@@ -43,7 +43,7 @@ public class GameScreen extends AbyssScreen {
   @Override
   public void show() {
     float worldWidth = 800;
-    float worldHeight = 600;
+    float worldHeight = 200;
     batch = new SpriteBatch();
     camera = new OrthographicCamera();
     vp = new ExtendViewport(worldWidth, worldHeight, camera);
@@ -72,20 +72,33 @@ public class GameScreen extends AbyssScreen {
     Gdx.gl.glClearColor(0, 0, 0, 1);
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+    // Perbarui posisi pemain berdasarkan input
+    player.update(delta);
+
+    // Perbarui posisi kamera agar mengikuti pemain
     camera.position.set(player.getPosition().x + player.getWidth() / 2, player.getPosition().y + player.getHeight() / 2,
         0);
     camera.update();
 
+    // Terapkan viewport
     vp.apply();
+
+    // Atur tampilan peta untuk kamera
     mapRenderer.setView(camera);
     mapRenderer.render();
-    player.update(delta);
 
+    // Mulai batch sprite
     batch.setProjectionMatrix(camera.combined);
     batch.begin();
+
+    // Gambar pemain
     player.render(batch);
+
+    // Selesai batch sprite
     batch.end();
 
+    // Periksa input keyboard untuk aksi lain (misalnya tombol tertentu untuk
+    // pergantian layar)
     if (Gdx.input.isKeyPressed(Keys.ANY_KEY) || Gdx.input.justTouched()) {
       game.setScreen(new GameOverScreen(game));
     }
