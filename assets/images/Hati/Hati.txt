@@ -1,0 +1,26 @@
+Hati.png
+size: 100, 104
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Api1
+  rotate: false
+  xy: 2, 2
+  size: 96, 32
+  orig: 96, 32
+  offset: 0, 0
+  index: -1
+Api2
+  rotate: false
+  xy: 2, 36
+  size: 96, 32
+  orig: 96, 32
+  offset: 0, 0
+  index: -1
+Api3
+  rotate: false
+  xy: 2, 70
+  size: 96, 32
+  orig: 96, 32
+  offset: 0, 0
+  index: -1
