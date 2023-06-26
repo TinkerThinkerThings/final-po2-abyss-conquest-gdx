@@ -1,0 +1,33 @@
+spritesheet_zombie.png
+size: 143, 143
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+AncangKanan
+  rotate: false
+  xy: 5, 5
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+DiamKanan
+  rotate: false
+  xy: 74, 5
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+Serang2Kanan
+  rotate: false
+  xy: 5, 74
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+SerangKanan
+  rotate: false
+  xy: 74, 74
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1

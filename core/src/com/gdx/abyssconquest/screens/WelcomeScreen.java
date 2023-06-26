@@ -3,12 +3,10 @@ package com.gdx.abyssconquest.screens;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.gdx.abyssconquest.KarakterUtama;
 import com.gdx.abyssconquest.Zombie;
 
 public class WelcomeScreen extends AbyssScreen {
@@ -30,6 +28,7 @@ public class WelcomeScreen extends AbyssScreen {
 
         // Membuat objek Zombie
         zombie = new Zombie(350, 100, 64, 64, "assets/images/Zombie/Kanan/DiamKanan.png", 100);
+        zombie.create();
     }
 
     @Override
@@ -44,10 +43,10 @@ public class WelcomeScreen extends AbyssScreen {
 
         // Merender karakter Zombie
         zombie.update(delta);
+        zombie.updateStateTime(delta);
         zombie.render(batch);
 
         batch.end();
-
         if (Gdx.input.isKeyPressed(Keys.ANY_KEY) || Gdx.input.justTouched()) {
             game.setScreen(new GameScreen(game));
         }

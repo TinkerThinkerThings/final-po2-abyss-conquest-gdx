@@ -13,6 +13,10 @@ public class Character {
     boundsColDetect = new Rectangle(x, y, width, height);
   }
 
+  public void create() {
+
+  }
+
   public void update(float delta) {
   }
 
