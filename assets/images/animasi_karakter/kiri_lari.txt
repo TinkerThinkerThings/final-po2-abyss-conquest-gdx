@@ -1,0 +1,40 @@
+kiri_lari.png
+size: 350, 74
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+abyss_diam
+  rotate: false
+  xy: 5, 5
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+kiri-1.png
+  rotate: false
+  xy: 74, 5
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+kiri_2.png
+  rotate: false
+  xy: 143, 5
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+kiri_3.png
+  rotate: false
+  xy: 212, 5
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+kiri_4.png
+  rotate: false
+  xy: 281, 5
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1

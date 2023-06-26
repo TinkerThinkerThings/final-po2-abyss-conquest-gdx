@@ -1,0 +1,33 @@
+lompat_kanan.png
+size: 143, 143
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+ka1.png
+  rotate: false
+  xy: 5, 5
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+l1.png
+  rotate: false
+  xy: 74, 5
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+l2.png
+  rotate: false
+  xy: 5, 74
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+l3.png
+  rotate: false
+  xy: 74, 74
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1

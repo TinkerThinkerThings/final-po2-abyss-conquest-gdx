@@ -1,0 +1,33 @@
+lompat_kiri.png.png
+size: 143, 143
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+ki1.png-1.png
+  rotate: false
+  xy: 5, 5
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+li1.png-8.png
+  rotate: false
+  xy: 74, 5
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+li2.png-9.png
+  rotate: false
+  xy: 5, 74
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+li3.png-10.png
+  rotate: false
+  xy: 74, 74
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1

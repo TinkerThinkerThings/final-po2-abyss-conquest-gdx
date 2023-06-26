@@ -1,0 +1,26 @@
+kiri_mati.png
+size: 212, 74
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+mati_kiri1-1.png
+  rotate: false
+  xy: 5, 5
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+mati_kiri2-2.png
+  rotate: false
+  xy: 74, 5
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+mati_kiri3-3.png
+  rotate: false
+  xy: 143, 5
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
