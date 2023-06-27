@@ -11,10 +11,13 @@ public class Zombie extends Character {
     private static final int FRAME_COLS = 2, FRAME_ROWS = 2;
 
     // Objek yang Digunakan
-    Animation<TextureRegion> zombieAnimation;
-    Texture sprshZombie;
+    Animation<TextureRegion> zombieAnimationKanan, zombieAnimationKiri;
+    TextureRegion currentFrame;
+    Texture sprshZombieKanan, sprshZombieKiri;
     SpriteBatch batch;
     private float stateTime;
+    private boolean isRight = false;
+    private boolean isLeft = false;
 
     private float speed;
 
@@ -25,29 +28,48 @@ public class Zombie extends Character {
 
     @Override
     public void create() {
-        sprshZombie = new Texture(Gdx.files.internal("assets/images/spritesheet_zombie.png"));
-        TextureRegion[][] tmp = TextureRegion.split(sprshZombie, sprshZombie.getWidth() / FRAME_COLS,
-                sprshZombie.getHeight() / FRAME_ROWS);
-        TextureRegion[] attackFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
-        int index = 0;
+        sprshZombieKanan = new Texture(Gdx.files.internal("assets/images/spritesheet_zombie.png"));
+        TextureRegion[][] tmpKanan = TextureRegion.split(sprshZombieKanan, sprshZombieKanan.getWidth() / FRAME_COLS,
+                sprshZombieKanan.getHeight() / FRAME_ROWS);
+        TextureRegion[] RightAttackFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
+        int indexKanan = 0;
         for (int i = 0; i < FRAME_ROWS; i++) {
             for (int j = 0; j < FRAME_COLS; j++) {
-                attackFrames[index++] = tmp[i][j];
+                RightAttackFrames[indexKanan++] = tmpKanan[i][j];
             }
         }
-        zombieAnimation = new Animation<TextureRegion>(0.5f, attackFrames);
+        sprshZombieKiri = new Texture(Gdx.files.internal("assets/images/spritesheet_zombie_Kiri.png"));
+        TextureRegion[][] tmpKiri = TextureRegion.split(sprshZombieKiri, sprshZombieKiri.getWidth() / FRAME_COLS,
+                sprshZombieKiri.getHeight() / FRAME_ROWS);
+        TextureRegion[] LeftAttackFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
+        int indexKiri = 0;
+        for (int i = 0; i < FRAME_ROWS; i++) {
+            for (int j = 0; j < FRAME_COLS; j++) {
+                LeftAttackFrames[indexKiri++] = tmpKiri[i][j];
+            }
+        }
+        zombieAnimationKanan = new Animation<TextureRegion>(0.5f, RightAttackFrames);
+        zombieAnimationKiri = new Animation<TextureRegion>(0.5f, LeftAttackFrames);
         batch = new SpriteBatch();
         stateTime = 0f;
     }
 
     @Override
     public void render(SpriteBatch batch) {
-        TextureRegion currentFrame = zombieAnimation.getKeyFrame(stateTime, true);
+        currentFrame = isRight ? zombieAnimationKanan.getKeyFrame(stateTime, true)
+                : zombieAnimationKiri.getKeyFrame(stateTime, true);
         batch.draw(currentFrame, boundsColDetect.x, boundsColDetect.y, boundsColDetect.width, boundsColDetect.height);
     }
 
     public void updateStateTime(float delta) {
         stateTime += delta;
+        if (stateTime % 2 < 1) {
+            isRight = true;
+            isLeft = false;
+        } else {
+            isRight = false;
+            isLeft = true;
+        }
     }
 
     public void setSpeed(float speed) {

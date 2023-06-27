@@ -98,8 +98,10 @@ public class KarakterUtama extends Character {
     public void render(SpriteBatch batch) {
         if (isMovingRight) {
             currentFrame = mcAnimationRight.getKeyFrame(stateTime, true);
+            isMovingLeft = false;
         } else {
             currentFrame = mcAnimationLeft.getKeyFrame(stateTime, true);
+            isMovingRight = false;
         }
         batch.draw(currentFrame, boundsColDetect.x, boundsColDetect.y);
     }
