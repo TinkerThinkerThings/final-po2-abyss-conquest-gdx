@@ -27,7 +27,7 @@ public class WelcomeScreen extends AbyssScreen {
         alpha = 0;
 
         // Membuat objek Zombie
-        zombie = new Zombie(350, 100, 64, 64, "assets/images/Zombie/Kanan/DiamKanan.png", 100);
+        zombie = new Zombie(350, 100, 64, 64, "assets/images/Zombie/Kanan/DiamKanan.png", 0);
         zombie.create();
     }
 
