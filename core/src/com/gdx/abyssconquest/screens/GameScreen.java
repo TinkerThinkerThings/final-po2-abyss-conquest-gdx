@@ -56,14 +56,16 @@ public class GameScreen extends AbyssScreen {
     float playerY = 100;
     float playerWidth = 64;
     float playerHeight = 64;
-    String playerImagePath = "assets/images/abyss_kanan/abyss_diam.png.png";
-    float playerSpeed = 150;
+    float playerSpeed = 0;
     int playerHealth = 100;
 
-    player = new KarakterUtama(playerX, playerY, playerWidth, playerHeight, playerImagePath, playerSpeed, playerHealth);
+    player = new KarakterUtama(playerX, playerY, playerWidth, playerHeight,
+        "assets/images/animasi_karakter/abyss_diam.png.png", playerSpeed, playerHealth);
+    player.create();
+    player.updateStateTime(playerHealth);
     gsm = Gdx.audio.newMusic(Gdx.files.internal("assets/music_and_sounds/gs_music.mp3"));
     gsm.play();
-    gsm.setVolume(0.5f);
+    gsm.setVolume(0.3f);
     gsm.setLooping(true);
   }
 
@@ -73,6 +75,7 @@ public class GameScreen extends AbyssScreen {
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
     // Perbarui posisi pemain berdasarkan input
+    player.handleInput();
     player.update(delta);
 
     // Perbarui posisi kamera agar mengikuti pemain
@@ -92,27 +95,16 @@ public class GameScreen extends AbyssScreen {
     batch.begin();
 
     // Gambar pemain
+    player.updateStateTime(delta);
     player.render(batch);
 
     // Selesai batch sprite
     batch.end();
-
-    // Periksa input keyboard untuk aksi lain (misalnya tombol tertentu untuk
-    // pergantian layar)
-    if (Gdx.input.isKeyPressed(Keys.ANY_KEY) || Gdx.input.justTouched()) {
-      game.setScreen(new GameOverScreen(game));
-    }
   }
 
   @Override
   public void resize(int width, int height) {
     vp.update(width, height, true);
-  }
-
-  public void handleInput() {
-    if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-      player.jump();
-    }
   }
 
   @Override
