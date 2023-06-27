@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-public class Zombie extends Character {
+public class Zombie {
     // Konstanta Rows and Columns of The Sprite Sheet
     private static final int FRAME_COLS = 2, FRAME_ROWS = 2;
 
