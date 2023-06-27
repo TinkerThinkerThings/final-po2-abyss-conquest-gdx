@@ -35,7 +35,7 @@ public class Zombie extends Character {
                 attackFrames[index++] = tmp[i][j];
             }
         }
-        zombieAnimation = new Animation<TextureRegion>(1f, attackFrames);
+        zombieAnimation = new Animation<TextureRegion>(0.5f, attackFrames);
         batch = new SpriteBatch();
         stateTime = 0f;
     }

@@ -63,7 +63,7 @@ public class GameScreen extends AbyssScreen {
     player = new KarakterUtama(playerX, playerY, playerWidth, playerHeight, playerImagePath, playerSpeed, playerHealth);
     gsm = Gdx.audio.newMusic(Gdx.files.internal("assets/music_and_sounds/gs_music.mp3"));
     gsm.play();
-    gsm.setVolume(0.7f);
+    gsm.setVolume(0.5f);
     gsm.setLooping(true);
   }
 
