@@ -6,166 +6,132 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 
-public class KarakterUtama extends Character {
-    // Konstanta
-    private static final int FRAME_COLS = 5, FRAME_ROWS = 1;
-    private static final float MOVE_SPEED = 75f;
+public class KarakterUtama {
+    private static final int FRAME_COLS = 5; // Dilihat dari spritesheet yang akan digunakan
+    private static final int FRAME_ROWS = 1; // Dilihat dari spritesheet yang akan digunakan
+    private float x; // Posisi karakter terhadap x
+    private float y; // Posisi karakter terhadap y
+    private float width; // Size lebar pada karakter
+    private float height; // Size tinggi pada karakter
 
-    Animation<TextureRegion> mcAnimationRight;
-    Animation<TextureRegion> mcAnimationLeft;
-    Texture spshMainCharacterRight, spshMainCharacterLeft;
-    TextureRegion currentFrame;
-    SpriteBatch batch;
-    private float stateTime;
+    private TextureRegion idleFrame;
+    private TextureRegion currentFrame;
+    private Animation<TextureRegion> animation; // Animasi yang akan digunakan pada karakter
+    private float stateTime = 0; // Waktu yang telah berlalu dalam animasi
 
-    private boolean isMovingLeft;
-    private boolean isMovingRight;
+    public KarakterUtama(float x, float y, int width, int height) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
 
-    // Attribut Karakter
-    private float speed;
-    private int health;
-    private boolean isJumping;
-    private float jumpPower;
-    private float gravity;
-    private float velocityY;
+        // Load animasi spritesheet
+        Texture spritesheet = new Texture(Gdx.files.internal("assets/images/animasi_karakter/lari_kanan.png"));
 
-    public KarakterUtama(float x, float y, float width, float height, String imagePath, float speed, int health) {
-        super(x, y, width, height, imagePath);
-        this.speed = speed;
-        this.health = health;
-        this.isJumping = false;
-        this.jumpPower = 300f;
-        this.gravity = 800f;
-        this.velocityY = 0f;
-    }
+        // Potongan-potongan animasi
+        TextureRegion[][] regions = TextureRegion.split(spritesheet, spritesheet.getWidth() / FRAME_COLS,
+                spritesheet.getHeight() / FRAME_ROWS);
 
-    @Override
-    public void create() {
-        super.create();
-        spshMainCharacterRight = new Texture(Gdx.files.internal("assets/images/animasi_karakter/lari_kanan.png"));
-        // Perhitungan Frame untuk Kanan
-        TextureRegion[][] tmpRight = TextureRegion.split(spshMainCharacterRight,
-                spshMainCharacterRight.getWidth() / FRAME_COLS,
-                spshMainCharacterRight.getHeight() / FRAME_ROWS);
-        TextureRegion[] runFramesRight = new TextureRegion[FRAME_COLS * FRAME_ROWS];
-        int indexRight = 0;
+        // Mengubah Array 2D menjadi Array 1D
+        TextureRegion[] runFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
+        int index = 0;
         for (int i = 0; i < FRAME_ROWS; i++) {
             for (int j = 0; j < FRAME_COLS; j++) {
-                runFramesRight[indexRight++] = tmpRight[i][j];
+                runFrames[index++] = regions[i][j];
             }
         }
-        mcAnimationRight = new Animation<TextureRegion>(0.5f, runFramesRight);
+        // Mengatur kondisi frame pertama
+        idleFrame = runFrames[0];
 
-        spshMainCharacterLeft = new Texture(Gdx.files.internal("assets/images/animasi_karakter/lari_kiri.png"));
-        // Perhitungan Frame untuk Kiri
-        TextureRegion[][] tmpLeft = TextureRegion.split(spshMainCharacterLeft,
-                spshMainCharacterLeft.getWidth() / FRAME_COLS,
-                spshMainCharacterLeft.getHeight() / FRAME_ROWS);
-        TextureRegion[] runFramesLeft = new TextureRegion[FRAME_COLS * FRAME_ROWS];
-        int indexLeft = 0;
-        for (int i = 0; i < FRAME_ROWS; i++) {
-            for (int j = 0; j < FRAME_COLS; j++) {
-                runFramesLeft[indexLeft++] = tmpLeft[i][j];
-            }
-        }
-        mcAnimationLeft = new Animation<TextureRegion>(0.5f, runFramesLeft);
-        batch = new SpriteBatch();
+        // Membuat animasi dari frame-frame yang ada
+        animation = new Animation<>(0.5f, runFrames);
         stateTime = 0f;
     }
 
-    @Override
-    public void update(float delta) {
-        float movement = speed * delta;
-        boundsColDetect.x += movement;
+    public void update() {
+        // Memperbarui posisi karakter utama berdasarkan input
+        inputHandling();
 
-        if (isJumping) {
-            velocityY += gravity * delta;
-            boundsColDetect.y += velocityY * delta;
-
-            if (boundsColDetect.y <= 0) {
-                boundsColDetect.y = 0;
-                isJumping = false;
-                velocityY = 0;
-            }
-        }
-        handleInput();
-        updateStateTime(delta);
+        // Memperbarui waktu animasi
+        stateTime += Gdx.graphics.getDeltaTime();
     }
 
-    @Override
-    public void render(SpriteBatch batch) {
-        if (isMovingRight) {
-            currentFrame = mcAnimationRight.getKeyFrame(stateTime, true);
-            isMovingLeft = false;
+    public void render(SpriteBatch spriteBatch) {
+        boolean isMoving = inputHandling();
+        // Mendapatkan frame animasi yang sesuai dengan waktu animasi real time
+        if (isMoving) {
+            // Mendapatkan frame animasi yang sesuai
+            currentFrame = animation.getKeyFrame(stateTime, true);
         } else {
-            currentFrame = mcAnimationLeft.getKeyFrame(stateTime, true);
-            isMovingRight = false;
+            currentFrame = idleFrame;
         }
-        batch.draw(currentFrame, boundsColDetect.x, boundsColDetect.y);
+        // Menggambar karakter utama pada posisi yang tepat
+        spriteBatch.draw(currentFrame, x, y);
     }
 
-    public void jump() {
-        if (!isJumping) {
-            isJumping = true;
-            velocityY = jumpPower;
+    private boolean inputHandling() {
+        boolean isMoving = false;
+        // Menghandle input untuk menggerakkan karakter utama
+        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+            x -= 1f;
+            isMoving = true;
         }
-    }
-
-    public void handleInput() {
-        isMovingLeft = Gdx.input.isKeyPressed(Input.Keys.A);
-        isMovingRight = Gdx.input.isKeyPressed(Input.Keys.D);
-
-        if (isMovingLeft) {
-            boundsColDetect.x -= MOVE_SPEED * Gdx.graphics.getDeltaTime();
+        if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+            x += 1f;
+            isMoving = true;
         }
-        if (isMovingRight) {
-            boundsColDetect.x += MOVE_SPEED * Gdx.graphics.getDeltaTime();
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+            y += 1f;
+            isMoving = true;
         }
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            jump();
+        return isMoving;
+    }
+
+    public boolean detectCollision(float otherX, float otherY, int otherWidth, int otherHeight) {
+        // Deteksi tabrakan antara karakter utama dengan objek lain berdasarkan posisi
+        // dan ukuran
+        if (x < otherX + otherWidth &&
+                x + width > otherX &&
+                y < otherY + otherHeight &&
+                y + height > otherY) {
+            // Terjadi Collision
+            return true;
         }
+        // Tidak terjadi Collision
+        return false;
     }
 
-    public void updateStateTime(float delta) {
-        stateTime += delta;
+    // SETTER GETTER
+    public float getX() {
+        return x;
     }
 
-    // Setter and Getter
-    public void setSpeed(float speed) {
-        this.speed = speed;
+    public void setX(float x) {
+        this.x = x;
     }
 
-    public float getSpeed() {
-        return speed;
+    public float getY() {
+        return y;
     }
 
-    public void setHealth(int health) {
-        this.health = health;
-    }
-
-    public int getHealth() {
-        return health;
-    }
-
-    public float getWidth() {
-        return boundsColDetect.width;
+    public void setY(float y) {
+        this.y = y;
     }
 
     public float getHeight() {
-        return boundsColDetect.height;
+        return height;
     }
 
-    public Vector2 getPosition() {
-        return new Vector2(boundsColDetect.x, boundsColDetect.y);
+    public void setHeight(float height) {
+        this.height = height;
     }
 
-    public float getStateTime() {
-        return stateTime;
+    public float getWidth() {
+        return width;
     }
 
-    public void setStateTime(float stateTime) {
-        this.stateTime = stateTime;
+    public void setWidth(float width) {
+        this.width = width;
     }
 }

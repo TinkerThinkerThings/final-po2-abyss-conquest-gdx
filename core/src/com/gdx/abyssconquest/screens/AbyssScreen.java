@@ -18,6 +18,10 @@ public abstract class AbyssScreen implements Screen {
   public void show() {
   }
 
+  public void update() {
+
+  }
+
   @Override
   public void hide() {
   }
