@@ -16,10 +16,12 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.gdx.abyssconquest.AbyssConquest;
 import com.gdx.abyssconquest.KarakterUtama;
+import com.gdx.abyssconquest.Zombie;
 
 public class GameScreen extends AbyssScreen {
   private Music gsm;
   private TiledMap map;
+  private Zombie zombie1, zombie2, zombie3, zombie4;
   private SpriteBatch batch;
   private ExtendViewport vp;
   private KarakterUtama karakter;
@@ -54,7 +56,11 @@ public class GameScreen extends AbyssScreen {
     map = new TmxMapLoader().load("assets/images/Map/MapAbyssConquest.tmx");
     mapRenderer = new OrthogonalTiledMapRenderer(map);
     layerIndex = 0;
-    karakter = new KarakterUtama(64, 100, 64, 64);
+    karakter = new KarakterUtama(50, 125, 64, 64);
+    zombie1 = new Zombie(235, 125, 64, 64);
+    zombie2 = new Zombie(800, 125, 64, 64);
+    zombie3 = new Zombie(1000, 125, 64, 64);
+    zombie4 = new Zombie(1200, 125, 64, 64);
 
     gsm = Gdx.audio.newMusic(Gdx.files.internal("assets/music_and_sounds/gs_music.mp3"));
     gsm.play();
@@ -109,7 +115,15 @@ public class GameScreen extends AbyssScreen {
     batch.setProjectionMatrix(camera.combined);
     batch.begin();
     karakter.update();
+    zombie1.update();
+    zombie2.update();
+    zombie3.update();
+    zombie4.update();
     karakter.render(batch);
+    zombie1.render(batch);
+    zombie2.render(batch);
+    zombie3.render(batch);
+    zombie4.render(batch);
     // Selesai batch sprite
     batch.end();
   }

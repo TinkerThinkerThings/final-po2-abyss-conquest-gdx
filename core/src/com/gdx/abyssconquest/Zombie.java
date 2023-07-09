@@ -8,83 +8,87 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Zombie {
     // Konstanta Rows and Columns of The Sprite Sheet
-    private static final int FRAME_COLS = 2, FRAME_ROWS = 2;
+    private static final int FRAME_COLS = 2;
+    private static final int FRAME_ROWS = 2;
+    private float x; // Posisi zombie terhadap x
+    private float y; // Posisi zombie terhadap y
+    private float width; // Size lebar pada karakter
+    private float height; // Size tinggi pada karakter
 
-    // Objek yang Digunakan
-    Animation<TextureRegion> zombieAnimationKanan, zombieAnimationKiri;
-    TextureRegion currentFrame;
-    Texture sprshZombieKanan, sprshZombieKiri;
-    SpriteBatch batch;
-    private float stateTime;
-    private boolean isRight = false;
-    private boolean isLeft = false;
+    private TextureRegion idleFrame;
+    private TextureRegion currentFrame;
+    private Animation<TextureRegion> zombieAnimationKanan; // Animasi kanan zombie
+    private Animation<TextureRegion> zombieAnimationKiri; // Animasi kiri zombie
+    private float stateTime = 0;
 
-    private float speed;
+    public Zombie(float x, float y, int width, int height) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
 
-    public Zombie(float x, float y, float width, float height, String imagePath, float speed) {
-        super(x, y, width, height, imagePath);
-        this.speed = speed;
-    }
+        // Load animasi spritesheet
+        Texture spritesheet = new Texture(Gdx.files.internal("assets/images/spritesheet_zombie_Kiri.png"));
 
-    @Override
-    public void create() {
-        sprshZombieKanan = new Texture(Gdx.files.internal("assets/images/spritesheet_zombie.png"));
-        TextureRegion[][] tmpKanan = TextureRegion.split(sprshZombieKanan, sprshZombieKanan.getWidth() / FRAME_COLS,
-                sprshZombieKanan.getHeight() / FRAME_ROWS);
-        TextureRegion[] RightAttackFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
-        int indexKanan = 0;
+        // Potongan - potongan animasi
+        TextureRegion[][] regions = TextureRegion.split(spritesheet, spritesheet.getWidth() / FRAME_COLS,
+                spritesheet.getHeight() / FRAME_ROWS);
+
+        // Mengubah Array 2D menjadi Array 1D
+        TextureRegion[] leftAttackZombie = new TextureRegion[FRAME_COLS * FRAME_ROWS];
+        int index = 0;
         for (int i = 0; i < FRAME_ROWS; i++) {
             for (int j = 0; j < FRAME_COLS; j++) {
-                RightAttackFrames[indexKanan++] = tmpKanan[i][j];
+                leftAttackZombie[index++] = regions[i][j];
             }
         }
-        sprshZombieKiri = new Texture(Gdx.files.internal("assets/images/spritesheet_zombie_Kiri.png"));
-        TextureRegion[][] tmpKiri = TextureRegion.split(sprshZombieKiri, sprshZombieKiri.getWidth() / FRAME_COLS,
-                sprshZombieKiri.getHeight() / FRAME_ROWS);
-        TextureRegion[] LeftAttackFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
-        int indexKiri = 0;
-        for (int i = 0; i < FRAME_ROWS; i++) {
-            for (int j = 0; j < FRAME_COLS; j++) {
-                LeftAttackFrames[indexKiri++] = tmpKiri[i][j];
-            }
-        }
-        zombieAnimationKanan = new Animation<TextureRegion>(0.5f, RightAttackFrames);
-        zombieAnimationKiri = new Animation<TextureRegion>(0.5f, LeftAttackFrames);
-        batch = new SpriteBatch();
+        // Mengatur kondisi frame pertama
+        idleFrame = leftAttackZombie[0];
+
+        // Membuat animasi dari frame-frame yang ada
+        zombieAnimationKiri = new Animation<>(0.5f, leftAttackZombie);
         stateTime = 0f;
     }
 
-    @Override
+    public void update() {
+        stateTime += Gdx.graphics.getDeltaTime();
+    }
+
     public void render(SpriteBatch batch) {
-        currentFrame = isRight ? zombieAnimationKanan.getKeyFrame(stateTime, true)
-                : zombieAnimationKiri.getKeyFrame(stateTime, true);
-        batch.draw(currentFrame, boundsColDetect.x, boundsColDetect.y, boundsColDetect.width, boundsColDetect.height);
+        currentFrame = zombieAnimationKiri.getKeyFrame(stateTime, true);
+        batch.draw(currentFrame, x, y);
     }
 
-    public void updateStateTime(float delta) {
-        stateTime += delta;
-        if (stateTime % 2 < 1) {
-            isRight = true;
-            isLeft = false;
-        } else {
-            isRight = false;
-            isLeft = true;
-        }
+    // SETTER GETTER
+    public float getX() {
+        return x;
     }
 
-    public void setSpeed(float speed) {
-        this.speed = speed;
+    public void setX(float x) {
+        this.x = x;
     }
 
-    public float getSpeed() {
-        return speed;
+    public float getY() {
+        return y;
     }
 
-    public float getStateTime() {
-        return stateTime;
+    public void setY(float y) {
+        this.y = y;
     }
 
-    public void setStateTime(float stateTime) {
-        this.stateTime = stateTime;
+    public float getHeight() {
+        return height;
+    }
+
+    public void setHeight(float height) {
+        this.height = height;
+    }
+
+    public float getWidth() {
+        return width;
+    }
+
+    public void setWidth(float width) {
+        this.width = width;
     }
 }
